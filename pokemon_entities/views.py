@@ -84,6 +84,15 @@ def show_pokemon(request, pokemon_id):
             'img_url': next_evolution_img_url,
             'title_ru': next_evolution.title,
         }
-
+    if requested_pokemon.element_type:
+        element_types = requested_pokemon.element_type.all()
+        pokemon_elements = []
+        for element_type in element_types:
+            element_image = element_type.get_image_path()
+            pokemon_elements.append({
+                'title': element_type.title,
+                'img': element_image,
+            })
+        pokemon['element_type'] = pokemon_elements
     return render(request, "pokemon.html", context={'map': folium_map._repr_html_(),
                                                     'pokemon': pokemon})

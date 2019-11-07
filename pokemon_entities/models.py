@@ -63,6 +63,14 @@ class PokemonEntity(models.Model):
 
 class PokemonElementType(models.Model):
     title = models.CharField('название', max_length=200)
+    image = models.ImageField('картинка', blank=True, null=True)
+    pokemons = models.ManyToManyField(Pokemon, blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    def get_image_path(self):
+        img_url = ''
+        if self.image:
+            img_url = self.image.url
+        return img_url
